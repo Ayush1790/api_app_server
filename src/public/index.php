@@ -7,7 +7,6 @@ use Phalcon\Mvc\Application;
 use Phalcon\Url;
 use Phalcon\Db\Adapter\Pdo\Mysql;
 use Phalcon\Config;
-use Phalcon\Events\Manager;
 use Phalcon\Mvc\Dispatcher;
 
 $config = new Config([]);
@@ -69,6 +68,7 @@ $container->set(
         );
     }
 );
+
 
 $container->set(
     'dispatcher',

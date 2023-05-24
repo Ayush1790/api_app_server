@@ -4,45 +4,40 @@ declare(strict_types=1);
 
 namespace Tests\Unit;
 
-use MyApp\Controllers\IndexController;
+use MyApp\Controllers\UserController;
 use MyApp\Models\Users;
 
 class IndexControllerTest extends AbstractUnitTest
 //class UnitTest extends \PHPUnit\Framework\TestCase
 {
+    public function testUsers()
+    {
+        $user = new UserController();
+        $this->assertEquals(true, $user->validateEmail("ayushgupta@cedcoss.com"));
+        $this->assertEquals(true, $user->validateEmail("ayushgupta@gmail.com"));
+        $this->assertEquals(false, $user->validateEmail("ayushguptacedcoss.com"));
+        $this->assertEquals(false, $user->validateEmail("ayushgupta@cedcosscom"));
+        $this->assertEquals(true, $user->checkPassword("Ayush@1234"));
+        $this->assertEquals(false, $user->checkPassword("ayush@1234"));
+        $this->assertEquals(false, $user->checkPassword("ayush1234"));
+        $this->assertEquals(false, $user->checkPassword("ayush@1"));
+        $this->assertEquals(false, $user->checkPassword("asjfbfbjrhbf1234"));
+        $this->assertEquals(false, $user->checkPassword("12154551214521234"));
+        $this->assertEquals(false, $user->checkPassword("ayush@12"));
+        $this->assertEquals(false, $user->checkPassword("ayushret5tgrhg"));
+        $this->assertEquals(false, $user->checkPassword("ayush@12345"));
+        $this->assertEquals(true, $user->checkPassword("ayushGupta@#&12345"));
+        $this->assertEquals(false, $user->isEmailExist("ayushgupta1@cedcoss.com"));
 
-    public function testController()
-    {
-        $new = new IndexController();
-        $res = $new->addData("Ayush", 'ayush$gmail.com', 1234);
-        $this->assertEquals($res, true, "pass");
-        $this->assertFalse($new->addData("ayush", "", 1), "success");
-        $res = $new->deleteData(9);
-        $this->assertEquals($res, true, "pass");
-    }
-    public function testModel()
-    {
-        $user = new Users();
-        $user->name = 'satyam';
-        $user->email = 'satyam$gmail.com';
-        $user->pswd = 123;
-        $res = $user->save();
-        $this->assertEquals($res, 1, "pass");
-        $res = $user->delete(11);
-        $this->assertEquals($res, 1, "pass");
-    }
 
-    public function testEmail()
-    {
-        $new = new IndexController();
-        $this->assertTrue($new->emailValidator("aysuh@gmail.com"), "pass");
-        $this->assertTrue($new->emailValidator("a@gmail.com"), "pass");
-        $this->assertTrue($new->emailValidator("aysuh@redifmail.com"), "pass");
-        $this->assertTrue($new->emailValidator("aysuh@gmail.in"), "pass");
-        $this->assertFalse($new->emailValidator("aysuhgmail.in"), "pass");
-        $this->assertFalse($new->emailValidator("aysuhgmail.in"), "pass");
-        $this->assertFalse($new->emailValidator("aysuhgmailin"), "pass");
-        $this->assertFalse($new->emailValidator("@gmail.in"), "pass");
-        $this->assertFalse($new->emailValidator(""), "pass");
+        $data = new Users();
+        $data->name = "Ayush";
+        $data->email = "ayushgupta1@cedcoss.com";
+        $data->pswd = "Ayush@1234";
+        $this->assertTrue($user->validateEmail($data->email));
+        $this->assertTrue($user->checkPassword($data->pswd));
+        $this->assertFalse($user->isEmailExist($data->email));
+        $result = $data->save();
+        $this->assertTrue($result, "pass");
     }
 }
