@@ -5,8 +5,7 @@ namespace MyApp\Controllers;
 use Phalcon\Mvc\Controller;
 use Phalcon\Security\JWT\Builder;
 use Phalcon\Security\JWT\Signer\Hmac;
-use Phalcon\Security\JWT\Token\Parser;
-use Phalcon\Security\JWT\Validator;
+
 
 
 class LoginController extends Controller
@@ -22,13 +21,13 @@ class LoginController extends Controller
         $pswd = $this->request->getPost('pswd');
         // set post fields
         $ch = curl_init();
-        $url = 'http://172.18.0.6/findUser?email=' . $email . '&pswd=' . $pswd;
+        $url = 'http://172.18.0.4/findUser?email=' . $email . '&pswd=' . $pswd;
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_URL, $url);
         // execute!
         $response = json_decode(curl_exec($ch), true);
         $loginController = new loginController();
-        $role = $response['name'];
+        $role = (string)$response['name'];
         $token = $loginController->getTokenAction($role);
         $_SESSION['token'] = $token;
         $this->response->redirect('product');

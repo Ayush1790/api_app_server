@@ -1,18 +1,7 @@
-<table class="table table-bordered table-striped">
-    <caption>Product details</caption>
-    <thead>
-        <th>id</th>
-        <th>name</th>
-        <th>Price</th>
-        <th>Quantity</th>
-        <th>desc</th>
-    </thead>
-    <tbody>
-        <?php
-        foreach ($data as $key => $value) {
-            echo "<tr><td>" . $value['id']['$oid'] . "</td><td>$value[name]</td><td>$value[price]</td><td>
-            $value[qty]</td><td>$value[desc]</td></tr>";
-        }
-        ?>
-    </tbody>
-</table>
+<div class='m-2 p-5'>
+    <form action="product/view">
+        <input type="number" name="page" placeholder="Enter Page no" class="form-control">
+        <br><br>
+        <input type="submit" value="submit" class='btn btn-primary'>
+    </form>
+</div>

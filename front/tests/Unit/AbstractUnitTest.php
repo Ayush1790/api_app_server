@@ -22,19 +22,7 @@ abstract class AbstractUnitTest extends UnitTestCase
 
         Di::reset();
         Di::setDefault($di);
-        $di->set(
-            'db',
-            function () {
-                return new Mysql(
-                    [
-                        'host'     => 'mysql-server',
-                        'username' => 'root',
-                        'password' => 'secret',
-                        'dbname'   => 'phalt',
-                    ]
-                );
-            }
-        );
+        
         $this->loaded = true;
     }
 

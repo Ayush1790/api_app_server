@@ -39,6 +39,8 @@ $app->get(
     '/products',
     function () use ($app) {
         $token = $app->request->get('bearer');
+        $page = $app->request->get('page');
+        $page--;
         if ($token) {
             $parser = new Parser();
             $tokenObject = $parser->parse($token);
@@ -49,7 +51,7 @@ $app->get(
             $claims = $tokenObject->getClaims()->getPayload();
             $tokenval = $this->mongo->user->findOne(['app_key' => $claims['sub']]);
             if ($tokenval) {
-                $product = $this->mongo->product->find([], ["limit" => (int)10]);
+                $product = $this->mongo->product->find([], ["limit" => (int)10, "skip" => 10 * $page]);
                 foreach ($product as $value) {
                     $result[] = [
                         'id'   =>  $value->_id,

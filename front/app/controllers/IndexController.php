@@ -24,7 +24,7 @@ class IndexController extends Controller
         );
         // set post fields
         $ch = curl_init();
-        $url = 'http://172.18.0.6/adduser';
+        $url = 'http://172.18.0.4/adduser';
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_POST, 1);
