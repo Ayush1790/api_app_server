@@ -1,21 +1,30 @@
 version: "3.3"
 services:
-  web-server:
+  api:
     build:
       dockerfile: php.Dockerfile
       context: .
     restart: always
     volumes:
-      - "./src/:/var/www/html/"
+      - "./api/:/var/www/html/"
     ports:
       - "8080:80"
+  front:
+    build:
+      dockerfile: php.Dockerfile
+      context: .
+    restart: always
+    volumes:
+      - "./front/:/var/www/html/"
+    ports:
+      - "4000:80"
   mysql-server:
     image: mysql:8.0.19
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: secret
     volumes:
-      - mysql-data:/var/lib/mysql
+      - mysql-data:/var/lib/mysql   
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:5.0.1
@@ -25,6 +34,15 @@ services:
       PMA_USER: root
       PMA_PASSWORD: secret
     ports:
-      - "5002:80"
+      - "5001:80"
+  mongo:
+    container_name: mongo
+    image: mongo:4.4
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password123
+    ports:
+      - "27017:27017"     
 volumes:
   mysql-data:
